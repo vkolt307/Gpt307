@@ -8,16 +8,17 @@ gsap.registerPlugin(ScrollTrigger);
 
 const IMG = {
   hero: "https://images.pexels.com/photos/31321526/pexels-photo-31321526.jpeg?cs=srgb&dl=pexels-donn-31321526.jpg&fm=jpg",
-  plantation: "https://images.pexels.com/photos/6876712/pexels-photo-6876712.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=2400",
-  leaves: "https://images.pexels.com/photos/37455146/pexels-photo-37455146/free-photo-of-close-up-of-rosemary-plants-with-raindrops.jpeg?auto=compress&cs=tinysrgb&w=2400",
+  plantation: "https://images.pexels.com/photos/6876712/pexels-photo-6876712.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=3840",
+  leaves: "https://images.pexels.com/photos/37455146/pexels-photo-37455146/free-photo-of-close-up-of-rosemary-plants-with-raindrops.jpeg?auto=compress&cs=tinysrgb&w=3840",
   ritual: "https://images.pexels.com/photos/6876712/pexels-photo-6876712.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=2400"
 };
 
 const VIDEO = {
   rainPlantation: "https://videos.pexels.com/video-files/37197510/15758136_3840_2160_30fps.mp4",
-  rainLeaves: "https://videos.pexels.com/video-files/4536571/4536571-hd_1080_1920_30fps.mp4",
-  rosemary: "https://videos.pexels.com/video-files/1494270/1494270-hd_1920_1080_24fps.mp4",
-  tea: "https://videos.pexels.com/video-files/6769794/6769794-uhd_3840_2160_24fps.mp4"
+  aerialTea: "https://videos.pexels.com/video-files/10389488/10389488-uhd_3840_2160_24fps.mp4",
+  rainLeaves: "https://videos.pexels.com/video-files/11935554/11935554-uhd_3840_2160_30fps.mp4",
+  rosemary: "https://videos.pexels.com/video-files/11935554/11935554-uhd_3840_2160_30fps.mp4",
+  tea: "https://videos.pexels.com/video-files/17512963/17512963-uhd_3840_2160_25fps.mp4"
 };
 
 const ingredients = [
@@ -34,7 +35,7 @@ function Scene({ image, video, eyebrow, title, text, align = "left", className =
     <section className={`scene ${className}`} data-scene>
       <div className="scene__media">
         <div className="scene__image" style={{ backgroundImage: `url("${image}")` }} />
-        {video && <video className="scene__video" src={video} autoPlay muted loop playsInline preload="metadata" poster={image} />}
+        {video && <video className="scene__video" data-video-src={video} autoPlay muted loop playsInline preload="none" poster={image} />}
       </div>
       <div className="scene__veil" />
       <div className="scene__mist scene__mist--one" />
@@ -66,6 +67,21 @@ export default function App() {
 
     lenis.on("scroll", ScrollTrigger.update);
 
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          if (!video.src) {
+            video.src = video.dataset.videoSrc;
+            video.load();
+          }
+          video.play().catch(() => {});
+          if (videoObserver) videoObserver.unobserve(video);
+        }
+      });
+    }, { rootMargin: "500px 0px" });
+    document.querySelectorAll("[data-video-src]").forEach((video) => videoObserver.observe(video));
+
     const anchors = [...document.querySelectorAll('a[href^="#"]')];
     anchors.forEach((anchor) => {
       anchor.addEventListener("click", (event) => {
@@ -82,6 +98,7 @@ export default function App() {
       anchors.forEach((anchor) => {
         anchor.replaceWith(anchor.cloneNode(true));
       });
+      videoObserver.disconnect();
       lenis.destroy();
       lenisRef.current = null;
     };
@@ -268,7 +285,7 @@ export default function App() {
 
         <Scene
           image={IMG.plantation}
-          video={VIDEO.rainPlantation}
+          video={VIDEO.aerialTea}
           eyebrow="The origin"
           title="A tea experience begins before the cup."
           text="Landscape, leaf, aroma, preparation and expectation all shape how a tea is experienced. VKOLT begins there — with the world around the leaf."
