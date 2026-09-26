@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import BotanicalScene from "./BotanicalScene";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -273,6 +274,17 @@ export default function App() {
           text="Landscape, leaf, aroma, preparation and expectation all shape how a tea is experienced. VKOLT begins there — with the world around the leaf."
           className="scene--origin"
         />
+
+        <section className="webgl-story">
+          <div className="webgl-story__canvas"><BotanicalScene /></div>
+          <div className="webgl-story__veil" />
+          <div className="webgl-story__content" data-reveal>
+            <span className="eyebrow">A living field</span>
+            <h2>Let the brand move like the landscape.</h2>
+            <p>Interactive depth is used here for atmosphere, not decoration: leaves drift with an organic rhythm while subtle particles move through the field.</p>
+            <div className="webgl-story__meta"><span>WebGL botanical layer</span><span>Pointer responsive</span><span>Designed for smooth scroll</span></div>
+          </div>
+        </section>
 
         <section className="split-section" id="blend">
           <div className="split-section__copy" data-reveal>
