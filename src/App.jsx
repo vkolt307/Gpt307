@@ -12,6 +12,13 @@ const IMG = {
   ritual: "https://images.pexels.com/photos/6876712/pexels-photo-6876712.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=2400"
 };
 
+const VIDEO = {
+  rainPlantation: "https://videos.pexels.com/video-files/37197510/15758136_3840_2160_30fps.mp4",
+  rainLeaves: "https://videos.pexels.com/video-files/4536571/4536571-hd_1080_1920_30fps.mp4",
+  rosemary: "https://videos.pexels.com/video-files/1494270/1494270-hd_1920_1080_24fps.mp4",
+  tea: "https://videos.pexels.com/video-files/6769794/6769794-uhd_3840_2160_24fps.mp4"
+};
+
 const ingredients = [
   ["Camellia sinensis", "Caffeine · L-theanine · theaflavins"],
   ["Rosemary", "Rosmarinic acid · carnosic acid · aroma"],
@@ -21,10 +28,13 @@ const ingredients = [
   ["Amla", "Ascorbic acid · gallic & ellagic phenolics"]
 ];
 
-function Scene({ image, eyebrow, title, text, align = "left", className = "" }) {
+function Scene({ image, video, eyebrow, title, text, align = "left", className = "" }) {
   return (
     <section className={`scene ${className}`} data-scene>
-      <div className="scene__image" style={{ backgroundImage: `url("${image}")` }} />
+      <div className="scene__media">
+        <div className="scene__image" style={{ backgroundImage: `url("${image}")` }} />
+        {video && <video className="scene__video" src={video} autoPlay muted loop playsInline preload="metadata" poster={image} />}
+      </div>
       <div className="scene__veil" />
       <div className="scene__mist scene__mist--one" />
       <div className="scene__mist scene__mist--two" /><div className="weather weather--wind">{Array.from({length:12},(_,i)=><i key={i} style={{"--i":i}} />)}</div><div className="weather weather--rain">{Array.from({length:34},(_,i)=><i key={i} style={{"--i":i}} />)}</div>
@@ -229,7 +239,7 @@ export default function App() {
 
       <main id="top">
         <section className="hero">
-          <div className="hero__image" style={{ backgroundImage: `url("${IMG.hero}")` }} />
+          <div className="hero__media"><div className="hero__image" style={{ backgroundImage: `url("${IMG.hero}")` }} /><video className="hero__video" src={VIDEO.rainPlantation} autoPlay muted loop playsInline preload="metadata" poster={IMG.hero} /></div>
           <div className="hero__overlay" />
           <div className="hero__sun" />
           <div className="hero__content">
@@ -257,6 +267,7 @@ export default function App() {
 
         <Scene
           image={IMG.plantation}
+          video={VIDEO.rainPlantation}
           eyebrow="The origin"
           title="A tea experience begins before the cup."
           text="Landscape, leaf, aroma, preparation and expectation all shape how a tea is experienced. VKOLT begins there — with the world around the leaf."
@@ -283,6 +294,7 @@ export default function App() {
 
         <Scene
           image={IMG.leaves}
+          video={VIDEO.rosemary}
           eyebrow="The botanical layer"
           title="Rosemary changes the conversation."
           text="Its aroma gives the blend a botanical point of view. The goal is not to hide the tea, but to make the first impression unmistakably VKOLT."
@@ -307,7 +319,18 @@ export default function App() {
         </section>
 
         <Scene
+          image={IMG.leaves}
+          video={VIDEO.rainLeaves}
+          eyebrow="After the rain"
+          title="The rare moment is often the quiet one."
+          text="Water on the leaf. Wind moving through the canopy. A few seconds when the landscape feels entirely present. That is the atmosphere we want VKOLT to own."
+          align="left"
+          className="scene--rain"
+        />
+
+        <Scene
           image={IMG.ritual}
+          video={VIDEO.tea}
           eyebrow="The ritual"
           title="From formulation to a moment worth remembering."
           text="Warm light, clear glass, rising steam. VKOLT is designed to feel at home where tea is part of the experience — in premium hospitality, gifting and considered private rituals."
