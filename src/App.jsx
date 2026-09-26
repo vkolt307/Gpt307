@@ -6,10 +6,10 @@ import Lenis from "lenis";
 gsap.registerPlugin(ScrollTrigger);
 
 const IMG = {
-  hero: "https://images.pexels.com/photos/17928232/pexels-photo-17928232.jpeg?cs=srgb&dl=pexels-pritam-sengupta-685216574-17928232.jpg&fm=jpg",
-  plantation: "https://images.pexels.com/photos/36906757/pexels-photo-36906757.jpeg?cs=srgb&dl=pexels-mohit-gupta-489013576-36906757.jpg&fm=jpg",
-  leaves: "https://images.pexels.com/photos/16886315/pexels-photo-16886315.jpeg?cs=srgb&dl=pexels-simlibas-16886315.jpg&fm=jpg",
-  ritual: "https://images.pexels.com/photos/37187551/pexels-photo-37187551.jpeg?cs=srgb&dl=pexels-jahratreza-37187551.jpg&fm=jpg"
+  hero: "https://images.pexels.com/photos/31321526/pexels-photo-31321526.jpeg?cs=srgb&dl=pexels-donn-31321526.jpg&fm=jpg",
+  plantation: "https://images.pexels.com/photos/6876712/pexels-photo-6876712.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=2400",
+  leaves: "https://images.pexels.com/photos/37455146/pexels-photo-37455146/free-photo-of-close-up-of-rosemary-plants-with-raindrops.jpeg?auto=compress&cs=tinysrgb&w=2400",
+  ritual: "https://images.pexels.com/photos/6876712/pexels-photo-6876712.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=2400"
 };
 
 const ingredients = [
@@ -27,7 +27,7 @@ function Scene({ image, eyebrow, title, text, align = "left", className = "" }) 
       <div className="scene__image" style={{ backgroundImage: `url("${image}")` }} />
       <div className="scene__veil" />
       <div className="scene__mist scene__mist--one" />
-      <div className="scene__mist scene__mist--two" />
+      <div className="scene__mist scene__mist--two" /><div className="weather weather--wind">{Array.from({length:12},(_,i)=><i key={i} style={{"--i":i}} />)}</div><div className="weather weather--rain">{Array.from({length:34},(_,i)=><i key={i} style={{"--i":i}} />)}</div>
       <div className="scene__content" data-reveal data-align={align}>
         <span className="eyebrow">{eyebrow}</span>
         <h2 data-title>{title}</h2>
@@ -240,7 +240,7 @@ export default function App() {
                 <div className="hero__title-mask"><span className="hero__title-line">Black tea.</span></div>
                 <div className="hero__title-mask"><span className="hero__title-line hero__title-line--accent">One identity.</span></div>
               </div>
-              <p>A patented rosemary-led blend composed for a distinctive aromatic signature, layered depth and a premium tea ritual.</p>
+              <p>A patented rosemary-led blend inspired by the moments that make tea feel alive — cool air, wet leaves, botanical aroma and a deliberate ritual.</p>
               <div className="hero__actions">
                 <button onClick={() => smoothTo("#blend")} className="button button--light">Discover the blend</button>
                 <button onClick={() => smoothTo("#enquire")} className="button button--ghost">Hospitality enquiries</button>
