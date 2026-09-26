@@ -33,7 +33,7 @@ function Scene({ image, eyebrow, title, text, align = "left", className = "" }) 
         <h2 data-title>{title}</h2>
         <p>{text}</p>
       </div>
-      <span className="scene__index">0{className === "scene--leaf" ? "2" : className === "scene--detail" ? "3" : "4"}</span>
+      <span className="scene__index">{className === "scene--origin" ? "01" : className === "scene--leaf" ? "02" : className === "scene--ritual" ? "03" : "00"}</span>
     </section>
   );
 }
@@ -78,18 +78,18 @@ export default function App() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set("[data-reveal]", { opacity: 0, y: 36 });
-      gsap.to("[data-reveal]", {
-        opacity: 1,
-        y: 0,
-        duration: 1.1,
-        ease: "power3.out",
-        stagger: 0.08,
-        scrollTrigger: {
-          trigger: "[data-reveal]",
-          start: "top 82%",
-          once: true
-        }
+      gsap.utils.toArray("[data-reveal]").forEach((el) => {
+        gsap.fromTo(el, { opacity: 0, y: 36 }, {
+          opacity: 1,
+          y: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 82%",
+            once: true
+          }
+        });
       });
 
       document.querySelectorAll("[data-scene]").forEach((scene) => {
